@@ -7,11 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox Text="{Binding Print.Text, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="97" Margin="228,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="347"/>
-        <ProgressBar Minimum="0" Maximum="100" Name="pbStatus" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="347" Margin="228,159,0,0" RenderTransformOrigin="0.029,1.139"/>
-        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="282,288,0,0" Click="Button_Click"/>
-        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="444,288,0,0" RenderTransformOrigin="0.234,0.695"/>
-        <TextBox Text="{Binding Print.Count, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="20" Margin="370,213,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63"/>
+        <TextBox SelectionChanged="LostFocus_TextBox" Text="{Binding Print.Text, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="97" Margin="228,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="347"/>
+        <ProgressBar Minimum="0" Maximum="100" Name="pbStatus" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="347" Margin="228,159,0,0" RenderTransformOrigin="0.029,1.139"/>
+        <TextBlock Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" Margin="394,170,329,211" Width="69" />
+        <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="Button_Click" Margin="286,299,0,0"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="448,299,0,0" RenderTransformOrigin="0.322,-0.689" Click="Button_Click_1"/>
+        <TextBox SelectionChanged="LostFocus_TextBox" Text="{Binding Print.Count, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="20" Margin="366,234,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63"/>
+        <Label Content="Number of copies" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="343,203,0,0"/>
 
     </Grid>
 </Window>

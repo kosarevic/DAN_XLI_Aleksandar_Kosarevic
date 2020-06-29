@@ -15,6 +15,7 @@ namespace Zadatak_1.ViewModels
     {
         public static int Id = 0;
         public static readonly object TheLock = new object();
+        public static bool cancel = false;
 
         private Print print;
 
@@ -40,11 +41,19 @@ namespace Zadatak_1.ViewModels
         {
             lock (TheLock)
             {
-                Thread.Sleep(1000);
-                print.Id = ++Id;
-                string path = "..//../Files/" + print.Id + "." + print.Date + ".txt";
-                File.WriteAllText(path, print.Text);
-                (sender as BackgroundWorker).ReportProgress(100/print.Count);
+                if (!cancel)
+                {
+                    Thread.Sleep(1000);
+                    print.Id = ++Id;
+                    string path = "..//../Files/" + print.Id + "." + print.Date + ".txt";
+                    File.WriteAllText(path, print.Text);
+                    double progress = 100 / print.Count;
+                    (sender as BackgroundWorker).ReportProgress(Convert.ToInt32((double)100 / print.Count));
+                }
+                else
+                {
+                    (sender as BackgroundWorker).Dispose();
+                }
             }
         }
 

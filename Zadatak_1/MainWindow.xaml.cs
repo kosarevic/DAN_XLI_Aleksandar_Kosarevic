@@ -32,23 +32,47 @@ namespace Zadatak_1
             pvm.Print.Count = 0;
             pvm.Print.Text = "";
             pvm.Print.Date = DateTime.Now.ToString("dd_MM_yyyy_HH_mm");
+            btnStart.IsEnabled = false;
+            btnCancel.IsEnabled = false;
         }
 
         private void Button_Click(object sender, EventArgs e)
         {
+            PrintViewModel.cancel = false;
+            btnCancel.IsEnabled = true;
+
             for (int i = 0; i < pvm.Print.Count; i++)
             {
                 BackgroundWorker worker = new BackgroundWorker();
                 worker.WorkerReportsProgress = true;
                 worker.DoWork += pvm.PrintCopy;
-                worker.ProgressChanged += worker_ProgressChanged;
+                worker.ProgressChanged += Worker_ProgressChanged;
                 worker.RunWorkerAsync();
             }
         }
 
-        void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            pbStatus.Value = e.ProgressPercentage;
+            pbStatus.Value += e.ProgressPercentage;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            PrintViewModel.cancel = true;
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Printing process canceled.", "Notification");
+        }
+
+        private void LostFocus_TextBox(object sender, RoutedEventArgs e)
+        {
+            //if the age is 65 or more, user has option to check "Lifetime" check box.
+            if (pvm.Print.Text != null && pvm.Print.Count != 0)
+            {
+                btnStart.IsEnabled = true;
+            }
+            else
+            {
+                btnStart.IsEnabled = false;
+            }
         }
     }
 }
