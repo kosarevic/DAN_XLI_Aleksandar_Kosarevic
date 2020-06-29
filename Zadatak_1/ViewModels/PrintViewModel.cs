@@ -47,12 +47,24 @@ namespace Zadatak_1.ViewModels
                     print.Id = ++Id;
                     string path = "..//../Files/" + print.Id + "." + print.Date + ".txt";
                     File.WriteAllText(path, print.Text);
-                    double progress = 100 / print.Count;
-                    (sender as BackgroundWorker).ReportProgress(Convert.ToInt32((double)100 / print.Count));
+                    MainWindow.workerIteration++;
+
+                    if (MainWindow.workerIteration != print.Count)
+                    {
+                        (sender as BackgroundWorker).ReportProgress(100 / print.Count);
+                    }
+                    else
+                    {
+                        (sender as BackgroundWorker).ReportProgress(100);
+                        MainWindow.printing = false;
+                        MainWindow.workerIteration = 0;
+                    }
                 }
                 else
                 {
                     (sender as BackgroundWorker).Dispose();
+                    MainWindow.printing = false;
+                    MainWindow.workerIteration = 0;
                 }
             }
         }

@@ -24,6 +24,8 @@ namespace Zadatak_1
     public partial class MainWindow : Window
     {
         PrintViewModel pvm = new PrintViewModel();
+        public static bool printing = false;
+        public static int workerIteration = 0;
 
         public MainWindow()
         {
@@ -39,33 +41,47 @@ namespace Zadatak_1
         private void Button_Click(object sender, EventArgs e)
         {
             PrintViewModel.cancel = false;
-            btnCancel.IsEnabled = true;
-
-            for (int i = 0; i < pvm.Print.Count; i++)
+            if (!printing)
             {
-                BackgroundWorker worker = new BackgroundWorker();
-                worker.WorkerReportsProgress = true;
-                worker.DoWork += pvm.PrintCopy;
-                worker.ProgressChanged += Worker_ProgressChanged;
-                worker.RunWorkerAsync();
+                printing = true;
+                pbStatus.Value = 0;
+                btnCancel.IsEnabled = true;
+
+                for (int i = 0; i < pvm.Print.Count; i++)
+                {
+                    BackgroundWorker worker = new BackgroundWorker();
+                    worker.WorkerReportsProgress = true;
+                    worker.DoWork += pvm.PrintCopy;
+                    worker.ProgressChanged += Worker_ProgressChanged;
+                    worker.RunWorkerAsync();
+                }
+            }
+            else
+            {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Printing alredy in progress.", "Notification");
             }
         }
 
         void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             pbStatus.Value += e.ProgressPercentage;
+            if (pbStatus.Value == 100)
+            {
+                btnCancel.IsEnabled = false;
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             PrintViewModel.cancel = true;
+            btnCancel.IsEnabled = false;
+            printing = false;
             MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Printing process canceled.", "Notification");
         }
 
         private void LostFocus_TextBox(object sender, RoutedEventArgs e)
         {
-            //if the age is 65 or more, user has option to check "Lifetime" check box.
-            if (pvm.Print.Text != null && pvm.Print.Count != 0)
+            if (pvm.Print.Text != "" && pvm.Print.Count != 0)
             {
                 btnStart.IsEnabled = true;
             }
