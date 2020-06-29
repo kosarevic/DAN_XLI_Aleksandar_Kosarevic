@@ -11,7 +11,7 @@
         <ProgressBar HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="347" Margin="228,159,0,0" RenderTransformOrigin="0.029,1.139"/>
         <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="282,288,0,0" Click="Button_Click"/>
         <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="444,288,0,0" RenderTransformOrigin="0.234,0.695"/>
-        <TextBox Text="{Binding count}" HorizontalAlignment="Left" Height="20" Margin="370,213,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63"/>
+        <TextBox Text="{Binding Print.Count, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="20" Margin="370,213,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63"/>
 
     </Grid>
 </Window>

@@ -11,16 +11,18 @@ namespace Zadatak_1.Models
         public int Id { get; set; }
         public string Text { get; set; }
         public string Date { get; set; }
+        public int Count { get; set; }
 
         public Print()
         {
         }
 
-        public Print(int id, string text, string date)
+        public Print(int id, string text, string date, int count)
         {
             Id = id;
             Text = text;
             Date = date;
+            Count = count;
         }
     }
 }

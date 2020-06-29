@@ -14,6 +14,7 @@ namespace Zadatak_1.ViewModels
     class PrintViewModel : INotifyPropertyChanged
     {
         public static int Id = 0;
+        public static readonly object TheLock = new object();
 
         private Print print;
 
@@ -37,10 +38,13 @@ namespace Zadatak_1.ViewModels
 
         public void PrintCopy(object callback)
         {
-            Thread.Sleep(1000);
-            print.Id = ++Id;
-            string path = "..//../Files/" + print.Id + "." + print.Date + ".txt";
-            File.WriteAllText(path, print.Text);
+            lock (TheLock)
+            {
+                Thread.Sleep(1000);
+                print.Id = ++Id;
+                string path = "..//../Files/" + print.Id + "." + print.Date + ".txt";
+                File.WriteAllText(path, print.Text);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

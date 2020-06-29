@@ -23,23 +23,22 @@ namespace Zadatak_1
     public partial class MainWindow : Window
     {
         PrintViewModel pvm = new PrintViewModel();
-        int count = 0;
 
         public MainWindow()
         {
             InitializeComponent();
             DataContext = pvm;
+            pvm.Print.Count = 0;
             pvm.Print.Text = "";
             pvm.Print.Date = DateTime.Now.ToString("dd_MM_yyyy_HH_mm");
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < pvm.Print.Count; i++)
             {
                 ThreadPool.QueueUserWorkItem(new WaitCallback(pvm.PrintCopy)); 
             }
-
         }
     }
 }
