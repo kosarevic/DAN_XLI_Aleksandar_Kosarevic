@@ -36,7 +36,7 @@ namespace Zadatak_1.ViewModels
             Print = new Print();
         }
 
-        public void PrintCopy(object callback)
+        public void PrintCopy(object sender, DoWorkEventArgs e)
         {
             lock (TheLock)
             {
@@ -44,6 +44,7 @@ namespace Zadatak_1.ViewModels
                 print.Id = ++Id;
                 string path = "..//../Files/" + print.Id + "." + print.Date + ".txt";
                 File.WriteAllText(path, print.Text);
+                (sender as BackgroundWorker).ReportProgress(100/print.Count);
             }
         }
 
