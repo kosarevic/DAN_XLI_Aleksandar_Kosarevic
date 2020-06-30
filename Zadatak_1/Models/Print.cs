@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Zadatak_1.Models
 {
+    /// <summary>
+    /// Class responsible for producing objects at each printing iteration.
+    /// </summary>
     class Print
     {
         public int Id { get; set; }
